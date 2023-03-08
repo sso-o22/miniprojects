@@ -40,7 +40,6 @@ class qtApp(QWidget):
         else:
             api = NaverApi()  # NaverApi 클래스 객체
             node = 'news'  # movie로 변경하면 영화검색
-            outputs = []  # 결과 담을 리스트 변수
             display = 100  # 검색결과 몇개 출력할건지
 
             result = api.get_naver_search(node, search, 1, display)
@@ -60,7 +59,6 @@ class qtApp(QWidget):
         # 컬럼 데이터를 수정 금지
         self.tblResult.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
-        
         for i, post in enumerate(items):  # 0, 뉴스 ...
             title = self.replaceHtmlTag(post['title'])  # HTML 특수문자 변환
             originallink = post['originallink']

@@ -12,7 +12,7 @@
 <!-- HTML 주석
 ![네이버뉴스앱](https://raw.githubusercontent.com/sso-o22/miniprojects/main/Images/newsapp.png)
 -->
-<img src="https://raw.githubusercontent.com/sso-o22/miniprojects/main/Images/newsApp.png" width="1000" />
+<img src="https://raw.githubusercontent.com/sso-o22/miniprojects/main/Images/newsapp.png" width="1000" />
 
 - Naver API 영화 검색 앱 만들기
   - Python 3.11.2

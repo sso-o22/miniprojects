@@ -61,6 +61,9 @@
 - 스레드 사용법
   - GUI와 처리시간이 긴 로직을 실행하면 반드시 쓰레드 사용
 
+![스레드앱](https://raw.githubusercontent.com/sso-o22/miniprojects/main/Images/thread.png)
+
+
 - 이메일 보내기, 대량메일 전송
   - 
 

@@ -66,7 +66,11 @@
 
 - 이메일 보내기, 대량메일 전송
 
-- PyGame
+- 게임 만들기 - DinoRun
+  - PyGame
+
+<img src="https://raw.githubusercontent.com/sso-o22/miniprojects/main/Images/pygame1.png" width="780" />
+
 
 
 

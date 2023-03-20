@@ -85,6 +85,11 @@
 
 <img src="https://raw.githubusercontent.com/sso-o22/miniprojects/main/Images/folium_gui.png" width="780" />
 
+- 계산기앱
+  - PyQt
+  - 16개의 signal을 1개의 slot함수로 처리
+
+<img src="https://raw.githubusercontent.com/sso-o22/miniprojects/main/Images/calculator.png" width="250" />
 
 
 ## 미니프로젝트 실습

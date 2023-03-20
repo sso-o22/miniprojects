@@ -71,7 +71,9 @@
 
 <img src="https://raw.githubusercontent.com/sso-o22/miniprojects/main/Images/pygame1.png" width="780" />
 
+<img src="https://raw.githubusercontent.com/sso-o22/miniprojects/main/Images/pygame2.png" width="780" />
 
+게임화면
 
 
 ## 미니프로젝트 실습

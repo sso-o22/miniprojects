@@ -28,7 +28,7 @@
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="정보 입력" FontSize="20" FontWeight="Bold"  
+            <Label Grid.Row="0" Grid.Column="0" Content="정보 입력" FontSize="22" FontWeight="Bold"  
                    VerticalAlignment="Center" HorizontalAlignment="Center" />
             <Label Grid.Row="1" Grid.Column="0" Content="이름" FontSize="20" Margin="10" 
                    VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -52,18 +52,20 @@
                      mah:TextBoxHelper.Watermark="전화번호를 입력하세요" 
                      mah:TextBoxHelper.UseFloatingWatermark="True"
                      mah:TextBoxHelper.ClearTextButton="True"/>
+            <Button Grid.Row="5" Grid.Column="1" x:Name="BtnFindPw" Content="찾기" Width="100" Height="50" Margin="5"
+                    FontSize="16" Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}" HorizontalAlignment="Right"/>
         </Grid>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" >
-                <Button x:Name="BtnFindId" Content="찾기" Width="100" Height="50" Margin="7"
-                        FontSize="16" Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}"/>
+                <Label Grid.Row="3" Grid.Column="0" x:Name="LblFindPw" Content="찾은 아이디 : " FontSize="20" Margin="10" 
+                   VerticalAlignment="Center" HorizontalAlignment="Left" />
+                <TextBlock x:Name="TxtFindPW" Text="{Binding password}" HorizontalAlignment="Right" Width="180" Margin="20" />
             </Grid>
 
             <Grid Grid.Row="3" >

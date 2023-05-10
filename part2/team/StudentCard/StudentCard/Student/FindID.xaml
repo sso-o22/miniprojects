@@ -37,17 +37,17 @@
             <Label Grid.Row="3" Grid.Column="0" Content="전화번호" FontSize="20" Margin="10" 
                    VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-            <TextBox Grid.Row="1" Grid.Column="1" Margin="10,10" FontSize="15" 
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="10,10" FontSize="15" x:Name="TxtName"
                      Text="{Binding InFirstName}"
                      mah:TextBoxHelper.Watermark="이름을 입력하세요" 
                      mah:TextBoxHelper.UseFloatingWatermark="True"
                      mah:TextBoxHelper.ClearTextButton="True"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Margin="10,10" FontSize="15" 
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="10,10" FontSize="15" x:Name="TxtBirthday"
                      Text="{Binding InFirstName}"
                      mah:TextBoxHelper.Watermark="생년월일을 입력하세요" 
                      mah:TextBoxHelper.UseFloatingWatermark="True"
                      mah:TextBoxHelper.ClearTextButton="True"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Margin="10,10" FontSize="15" 
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="10,10" FontSize="15" x:Name="TxtPhoneNum"
                      Text="{Binding InFirstName}"
                      mah:TextBoxHelper.Watermark="전화번호를 입력하세요" 
                      mah:TextBoxHelper.UseFloatingWatermark="True"
@@ -65,7 +65,7 @@
             <Grid Grid.Row="0" >
                 <Label Grid.Row="3" Grid.Column="0" x:Name="LblFindPw" Content="찾은 아이디 : " FontSize="20" Margin="10" 
                    VerticalAlignment="Center" HorizontalAlignment="Left" />
-                <TextBlock x:Name="TxtFindPW" Text="{Binding password}" HorizontalAlignment="Right" Width="180" Margin="20" />
+                <TextBlock x:Name="TxbFindPW" Text="{Binding password}" HorizontalAlignment="Right" Width="180" Margin="20" />
             </Grid>
 
             <Grid Grid.Row="3" >

@@ -16,13 +16,19 @@ using System.Windows.Shapes;
 namespace StudentCard
 {
     /// <summary>
-    /// FindID.xaml에 대한 상호 작용 논리
+    /// FindPW.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class FindID : MetroWindow
+    public partial class FindPW : MetroWindow
     {
-        public FindID()
+        public FindPW()
         {
             InitializeComponent();
+        }
+
+        private void BtnHome_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Owner.Show();
         }
     }
 }

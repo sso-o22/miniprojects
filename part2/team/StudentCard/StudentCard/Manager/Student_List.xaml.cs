@@ -1,7 +1,7 @@
 ﻿using MahApps.Metro.Controls;
+using MySql.Data.MySqlClient;
 using StudentCard.Logics;
 using StudentCard.Module;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,6 +30,7 @@ namespace StudentCard
         {
             try
             {
+
                 string text = TbxSearch.Text;
                 switch (selItem)
                 {
@@ -53,7 +54,7 @@ namespace StudentCard
                             PhoneNum,
                             address,
                             gender
-                            FROM studenttbl " + target;
+                            FROM student_list " + target;
                     Debug.WriteLine(query);
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
@@ -68,6 +69,7 @@ namespace StudentCard
                             studentName = Convert.ToString(row["studentName"]),
                             birthday = Convert.ToString(row["birthday"]),
                             major = Convert.ToString(row["major"]),
+                            PhoneNum = Convert.ToString(row["PhoneNum"]),
                             address = Convert.ToString(row["address"]),
                             gender = Convert.ToString(row["gender"]),
                         });
@@ -81,6 +83,13 @@ namespace StudentCard
                 await Commons.ShowMessageAsync("오류", $"DB 저장오류 {ex.Message}");
 
             }
+
+
+
+
+
+
+
         }
 
         //private void BtnReference_Click(object sender, RoutedEventArgs e)

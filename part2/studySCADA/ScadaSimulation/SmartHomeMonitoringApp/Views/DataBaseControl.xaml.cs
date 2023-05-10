@@ -20,6 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using uPLibrary.Networking.M2Mqtt.Messages;
+using uPLibrary.Networking.M2Mqtt;
 
 namespace SmartHomeMonitoringApp.Views
 {
@@ -46,15 +47,29 @@ namespace SmartHomeMonitoringApp.Views
 
             IsConnected = false;  // 아직 접속이 안되었음
             BtnConnDb.IsChecked = false;
+
+            // 실시간 모니터링에서 넘어왔을 때
+            if (Commons.MQTT_CLIENT != null && Commons.MQTT_CLIENT.IsConnected)
+            {
+                IsConnected = true;
+                BtnConnDb.IsChecked = true;
+                BtnConnDb.Content = "MQTT 연결중";
+                Commons.MQTT_CLIENT.MqttMsgPublishReceived += MQTT_CLIENT_MqttMsgPublishReceived;
+            }
         }
 
         // 토글버튼 클릭 이벤트 핸들러
         private void BtnConnDb_Click(object sender, RoutedEventArgs e)
         {
+            ConnectDB();
+        }
+
+        private void ConnectDB()
+        {
             if (IsConnected == false)
             {
                 // Mqtt 브로커 생성
-                Commons.MQTT_CLIENT = new uPLibrary.Networking.M2Mqtt.MqttClient(Commons.BROKERHOST);
+                Commons.MQTT_CLIENT = new MqttClient(Commons.BROKERHOST);
 
                 try
                 {
@@ -90,12 +105,12 @@ namespace SmartHomeMonitoringApp.Views
 
                         BtnConnDb.IsChecked = false;
                         IsConnected = false;
-                    }                  
+                    }
                 }
                 catch (Exception ex)
                 {
                     UpdateLog($"!!! MQTT Error 발생 : {ex.Message}");
-                }   
+                }
             }
         }
 

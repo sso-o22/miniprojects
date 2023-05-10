@@ -19,6 +19,8 @@ using StudentCard.Logics;
 using StudentCard.Models;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Relational;
+using System.Diagnostics;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace StudentCard
 {
@@ -64,8 +66,8 @@ namespace StudentCard
                             StudentID = Convert.ToInt32(dr["studentID"]),
                             StudentName = Convert.ToString(dr["studentName"]),
                             Reason = Convert.ToString(dr["reason"]),
-                            StartDate = Convert.ToDateTime(dr["startDate"]),
-                            EndDate = Convert.ToDateTime(dr["endDate"])
+                            StartDate = Convert.ToDateTime(dr["startDate"]).ToString("yyyy-MM-dd"),
+                            EndDate = Convert.ToDateTime(dr["endDate"]).ToString("yyyy-MM-dd")
                         });
                     }
 
@@ -134,8 +136,8 @@ namespace StudentCard
                             StudentID = Convert.ToInt32(dr["studentID"]),
                             StudentName = Convert.ToString(dr["studentName"]),
                             Reason = Convert.ToString(dr["reason"]),
-                            StartDate = Convert.ToDateTime(dr["startDate"]),
-                            EndDate = Convert.ToDateTime(dr["endDate"])
+                            StartDate = Convert.ToDateTime(dr["startDate"]).ToString("yyyy-MM-dd"),
+                            EndDate = Convert.ToDateTime(dr["endDate"]).ToString("yyyy-MM-dd")
                         });
                     }
 
@@ -163,124 +165,84 @@ namespace StudentCard
         private async void BtnSearchDate_Click(object sender, RoutedEventArgs e)
         {
             this.DataContext = null;
-            // TxtMovieName.DataContext = string.Empty;
 
-            DateTime? selectedstartDate = DTPstartdate.SelectedDateTime;
-            if (selectedstartDate.HasValue)
-            {
-                string startdateString = selectedstartDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
-                // 선택한 날짜와 시간을 "yyyy-MM-dd HH:mm:ss" 형식의 문자열로 변환하여 dateString 변수에 저장
-            }
-            else
-            {
-                await Commons.ShowMessageAsync("오류", $"개같은 오류");
-            }
-
-            DateTime? selectedendDate = DTPenddate.SelectedDateTime;
-            if (selectedendDate.HasValue)
-            {
-                string startdateString = selectedendDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
-                // 선택한 날짜와 시간을 "yyyy-MM-dd HH:mm:ss" 형식의 문자열로 변환하여 dateString 변수에 저장
-            }
-            else
-            {
-                await Commons.ShowMessageAsync("오류", $"개같은 오류");
-            }
 
             List<WhyParkStudent> list = new List<WhyParkStudent>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(Commons.myConnString))
-                {
-                    if (conn.State == ConnectionState.Closed) conn.Open();
+                DateTime? startDate = DTPstartdate.SelectedDate;
+                DateTime? endDate = DTPenddate.SelectedDate;
 
-                    var query = $@"SELECT studentID,
+                if (startDate.HasValue && endDate.HasValue)
+                {
+                    if (startDate.Value > endDate.Value)
+                    {
+                        var mySettings = new MetroDialogSettings
+                        {
+                            AffirmativeButtonText = "확인",
+                            AnimateShow = true,
+                            AnimateHide = true
+                        };
+
+                        var result = await this.ShowMessageAsync("날짜선택", "날짜를 올바르게 설정해 주세요.");
+                    }
+                    else
+                    {
+                        using (MySqlConnection conn = new MySqlConnection(Commons.myConnString))
+                        {
+                            if (conn.State == ConnectionState.Closed) conn.Open();
+
+                            var query = $@"SELECT studentID,
                                         studentName,
                                         reason,
                                         startDate,
                                         endDate
                                     FROM managertbl
-                                    WHERE  {selectedstartDate}>= startdate;
- ";
+                                    WHERE DATE(startDate) <= '{DTPstartdate}' AND DATE(endDate) >= '{DTPenddate}';";
 
+                            var cmd = new MySqlCommand(query, conn);
+                            var adapter = new MySqlDataAdapter(cmd);
+                            var dSet = new DataSet();
+                            adapter.Fill(dSet, "GrdResult");
 
-                    var cmd = new MySqlCommand(query, conn);
-                    var adapter = new MySqlDataAdapter(cmd);
-                    var dSet = new DataSet();
-                    adapter.Fill(dSet, "GrdResult");
+                            foreach (DataRow dr in dSet.Tables["GrdResult"].Rows)
+                            {
+                                list.Add(new WhyParkStudent
+                                {
+                                    StudentID = Convert.ToInt32(dr["studentID"]),
+                                    StudentName = Convert.ToString(dr["studentName"]),
+                                    Reason = Convert.ToString(dr["reason"]),
+                                    StartDate = Convert.ToDateTime(dr["startDate"]).ToString("yyyy-MM-dd"),
+                                    EndDate = Convert.ToDateTime(dr["endDate"]).ToString("yyyy-MM-dd")
+                                });
+                            }
 
-                    foreach (DataRow dr in dSet.Tables["GrdResult"].Rows)
-                    {
-                        list.Add(new WhyParkStudent
-                        {
-                            StudentID = Convert.ToInt32(dr["studentID"]),
-                            StudentName = Convert.ToString(dr["studentName"]),
-                            Reason = Convert.ToString(dr["reason"]),
-                            StartDate = Convert.ToDateTime(dr["startDate"]),
-                            EndDate = Convert.ToDateTime(dr["endDate"])
-                        });
+                            // string StartDate = StartDate.ToString("yyyy-MM-DD");
+                            this.DataContext = list;
+                            // isFavorite = true;
+                            StsResult.Content = $"{list.Count}건 조회완료";
+
+                        }
                     }
-
-                    this.DataContext = list;
-                    // isFavorite = true;
-                    StsResult.Content = $"{list.Count}건 조회완료";
-
                 }
 
+
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                await Commons.ShowMessageAsync("오류", $"DB조회 오류 {ex.Message}");
+                await Commons.ShowMessageAsync("오류", $"날짜를 선택해주세요!");
             }
         }
 
-        //private void CboReqDate_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (CboReqDate.SelectedValue != null)
-        //    {
-        //        // MessageBox.Show(CboReqDate.SelectedValue.ToString());
-        //        using (MySqlConnection conn = new MySqlConnection(Commons.myConnString))
-        //        {
-        //            conn.Open();
-        //            var query = @"SELECT studentID,
-        //                                studentName,
-        //                                reason,
-        //                                startDate,
-        //                                endDate
-        //                            FROM managertbl
-        //                            WHERE DATE_FORMAT(startDate, '%Y-%m-%d') = @Timestamp ";
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Hide();
+            Owner.Show();
+        }
 
-        //            MySqlCommand cmd = new MySqlCommand(query, conn);
-        //            cmd.Parameters.AddWithValue("@Timestamp", CboReqDate.SelectedValue.ToString());
-        //            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-        //            DataSet ds = new DataSet();
-        //            adapter.Fill(ds, "dustsensor");
-        //            List<DustSensor> dustSensors = new List<DustSensor>();
+        private void MetroWindow_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
+        {
 
-        //            foreach (DataRow row in ds.Tables["dustsensor"].Rows)
-        //            {
-        //                dustSensors.Add(new DustSensor
-        //                {
-        //                    Id = Convert.ToInt32(row["Id"]),    // mySql은 컬럼이름에 대소문자 구분없이 쓰기때문에
-        //                    Dev_id = Convert.ToString(row["Dev_id"]),
-        //                    Name = Convert.ToString(row["Name"]),
-        //                    Loc = Convert.ToString(row["Loc"]),
-        //                    Coordx = Convert.ToDouble(row["Coordx"]),
-        //                    Coordy = Convert.ToDouble(row["Coordy"]),
-        //                    Ison = Convert.ToBoolean(row["Ison"]),
-        //                    Pm10_after = Convert.ToInt32(row["Pm10_after"]),
-        //                    Pm25_after = Convert.ToInt32(row["Pm25_after"]),
-        //                    State = Convert.ToInt32(row["State"]),
-        //                    Timestamp = Convert.ToDateTime(row["Timestamp"]),
-        //                    Company_id = Convert.ToString(row["Company_id"]),
-        //                    Company_name = Convert.ToString(row["Company_name"])
-        //                });
-        //            }
-
-        //            this.DataContext = dustSensors;
-        //            StsResult.Content = $"DB {dustSensors.Count} 건 조회완료";
-        //        }
-        //    }
+        }
     }
 }
-

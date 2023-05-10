@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace StudentCard
+namespace SmartHomeMonitoringApp.Views
 {
     /// <summary>
-    /// FindPW.xaml에 대한 상호 작용 논리
+    /// VisualizationControl.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class FindPW : MetroWindow
+    public partial class VisualizationControl : UserControl
     {
-        public FindPW()
+        public VisualizationControl()
         {
             InitializeComponent();
         }

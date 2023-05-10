@@ -53,6 +53,9 @@
     <Reference Include="K4os.Hash.xxHash, Version=1.0.8.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
       <HintPath>..\packages\K4os.Hash.xxHash.1.0.8\lib\net462\K4os.Hash.xxHash.dll</HintPath>
     </Reference>
+    <Reference Include="M2Mqtt.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.4.9\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -161,6 +164,9 @@
     <Reference Include="MySql.Data, Version=8.0.33.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.33\lib\net48\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -207,28 +213,28 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Logics\Commons.cs" />
-    <Compile Include="Manager.xaml.cs">
+    <Compile Include="Manager\Manager.xaml.cs">
       <DependentUpon>Manager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\StudentList.cs" />
     <Compile Include="Models\WhyParkStudent.cs" />
-    <Compile Include="Student_List.xaml.cs">
+    <Compile Include="Manager\Student_List.xaml.cs">
       <DependentUpon>Student_List.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StudentManagement.xaml.cs">
+    <Compile Include="Student\StudentManagement.xaml.cs">
       <DependentUpon>StudentManagement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WhyPark.xaml.cs">
+    <Compile Include="Student\WhyPark.xaml.cs">
       <DependentUpon>WhyPark.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WhyPark_Manager.xaml.cs">
+    <Compile Include="Manager\WhyPark_Manager.xaml.cs">
       <DependentUpon>WhyPark_Manager.xaml</DependentUpon>
     </Compile>
-    <Page Include="FindID.xaml">
+    <Page Include="Student\FindID.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FindPW.xaml">
+    <Page Include="Student\FindPW.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,33 +246,33 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FindID.xaml.cs">
+    <Compile Include="Student\FindID.xaml.cs">
       <DependentUpon>FindID.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FindPW.xaml.cs">
+    <Compile Include="Student\FindPW.xaml.cs">
       <DependentUpon>FindPW.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Manager.xaml">
+    <Page Include="Manager\Manager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Student_List.xaml">
+    <Page Include="Manager\Student_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StudentManagement.xaml">
+    <Page Include="Student\StudentManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WhyPark.xaml">
+    <Page Include="Student\WhyPark.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WhyPark_Manager.xaml">
+    <Page Include="Manager\WhyPark_Manager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -298,9 +304,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Manager\" />
-    <Folder Include="Student\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

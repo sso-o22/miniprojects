@@ -9,21 +9,26 @@
     xmlns:local="clr-namespace:StudentCard"
     mc:Ignorable="d"
     Loaded="MetroWindow_Loaded"
-     Title="학생명부" Height="450" Width="700">
+     Title="ManagerSystem" Height="450" Width="700">
     <mah:MetroWindow.IconTemplate>
         <DataTemplate>
             <iconPacks:PackIconMaterial Kind="AccountBoxMultiple" Margin="5,7,0,0"/>
         </DataTemplate>
     </mah:MetroWindow.IconTemplate>
+    
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
-
         <Grid Grid.Row="0">
+            <Label Grid.Column="0" Content="학생명부" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Margin="5" />
+        </Grid>
+
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="110"/>
                 <ColumnDefinition Width="1*"/>
@@ -37,24 +42,28 @@
                 <ComboBoxItem Content="학번"/>
                 <ComboBoxItem Content="이름"/>
             </ComboBox>
-            <TextBox x:Name="TbxSearch" Grid.Column="1" Margin="5"/>
+            <TextBox x:Name="TbxSearch" Grid.Column="1" Margin="5" />
 
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button x:Name="BtnSearch" Content="검색" Width="100" Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Click="BtnSearch_Click" />
+                <Button x:Name="BtnSearch" Content="검색" Width="80" Height="40" Margin="5" FontSize="14"
+                        Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Click="BtnSearch_Click" />
                 <!--<Button x:Name="BtnReference" Content="조회" Width="100" Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Highlight}" Click="BtnReference_Click" />-->
-
             </StackPanel>
         </Grid>
 
-
-        <DataGrid Grid.Row="1" x:Name="GrdResult" Style="{StaticResource MahApps.Styles.DataGrid.Azure}" Margin="10,10,10,10"
-                IsReadOnly="True" ItemsSource="{Binding}" ></DataGrid>
-
-        <StatusBar Grid.Row="2">
-            <StatusBarItem Content="학생 명부현황"/>
-            <Separator Style="{StaticResource MahApps.Styles.Separator.StatusBar}"/>
-            <StatusBarItem x:Name="StsResult"/>
-        </StatusBar>
-
+        <Grid Grid.Row="2">
+            <DataGrid Grid.Row="2" x:Name="GrdResult" IsReadOnly="True" ItemsSource="{Binding}"
+                      Style="{StaticResource MahApps.Styles.DataGrid.Azure}" Margin="10,10,10,10">
+            </DataGrid>
+        </Grid>
+  
+        <!-- 상태바 영역 -->
+        <Grid Grid.Row="3">
+            <StatusBar Grid.Row="2" Margin="0,349,0,0" Grid.RowSpan="2">
+                <StatusBarItem Content="학생 명부현황"/>
+                <Separator Style="{StaticResource MahApps.Styles.Separator.StatusBar}"/>
+                <StatusBarItem x:Name="StsResult"/>
+            </StatusBar>
+        </Grid>
     </Grid>
 </mah:MetroWindow>

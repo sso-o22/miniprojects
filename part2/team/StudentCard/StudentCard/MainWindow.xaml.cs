@@ -44,9 +44,11 @@ namespace StudentCard
             try
             {
                 Check_IdPw(TxtStudentId.Text, PwbPassword.Password.ToString());
+
             }
             catch (Exception ex)
             {
+
                 await Commons.ShowMessageAsync("오류", $"오류발생 : {ex.Message}"); ;
             }
 
@@ -63,9 +65,11 @@ namespace StudentCard
                 //var studentId = TxtStudentId.Text;
                 var studentId = TxtStudentId.Text;
                 var password = PwbPassword.Password.ToString();
-                var query = @"SELECT studentID,
-                                     password
-                                FROM logintbl
+                var query = @"SELECT studentID
+                                   , studentname
+                                   , major
+                                   , password
+                                FROM login_student
                                WHERE studentID = @STUDENTID";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -75,18 +79,42 @@ namespace StudentCard
                 {
                     Debug.WriteLine(Convert.ToInt32(reader["studentId"]));
                     Debug.WriteLine(reader["password"].ToString());
+                    Debug.WriteLine(reader["studentname"]);
+                    Debug.WriteLine(reader["major"]);
                     if (studentId == ((Convert.ToInt32(reader["studentId"])).ToString()) && password == ((string)reader["password"]))
                     {
+                        if (Convert.ToString(reader["major"]) == "관리자")
+                        {
+                            var manager = new Manager();
+                            manager.Owner = this;
+                            manager.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                            this.Hide();
+                            this.TxtStudentId.Text = string.Empty;
+                            this.PwbPassword.Password = string.Empty.ToString();
+                            this.TxtStudentId.Focus();
+                            manager.ShowDialog();
+                            return;
+                        }
+                        else
+                        {
+                            Commons.STUDENTID = Convert.ToInt32(reader["studentId"]);
+                            Commons.NAME = Convert.ToString(reader["studentname"]);
+                            Commons.Major = Convert.ToString(reader["major"]);
+
+                            var studentManagement = new StudentManagement(Commons.STUDENTID, Commons.NAME);
+                            // 부모창 위치값을 자식창으로 전달
+                            studentManagement.Owner = this;
+                            studentManagement.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                            this.Hide();
+                            this.TxtStudentId.Text = string.Empty;
+                            this.PwbPassword.Password = string.Empty.ToString();
+                            this.TxtStudentId.Focus();
+                            studentManagement.ShowDialog();
+                            return;
+                        }
                         await Commons.ShowMessageAsync("로그인", "로그인 성공");
-                        var studentManagement = new StudentManagement(Commons.STUDENTID, Commons.NAME);
-                        // 부모창 위치값을 자식창으로 전달
-                        studentManagement.Owner = this;
-                        studentManagement.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                        this.Hide();
-                        this.TxtStudentId.Text = string.Empty;
-                        this.PwbPassword.Password = string.Empty.ToString();
-                        studentManagement.ShowDialog();
-                        return;
+
+
                     }
                     else
                     {
@@ -97,38 +125,27 @@ namespace StudentCard
             }
         }
 
-        private void BtnID_Click(object sender, RoutedEventArgs e)
+        private void BtnNew_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void BtnID_Click(object sender, RoutedEventArgs e)
+        {
+            var findId = new FindID();
+            findId.Owner = this;
+            findId.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Hide();
+            findId.ShowDialog();
         }
 
         private void BtnPW_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            //if (PwbPassword.Password == "Password")
-            //{
-            //    LblCheckPw.Content = "'Password' is not allowed as a password.";
-            //}
-            //else
-            //{
-            //    LblCheckPw.Content = string.Empty;
-            //}
-        }
-
-        private void CboChecked_Checked(object sender, RoutedEventArgs e)
-        {
-            //if (CboChecked.IsChecked == true)
-            //{
-            //    PwbPassword.PasswordChar = default;
-            //}
-            //else
-            //{
-            //    PwbPassword.Password = "*";
-            //}
+            var findPw = new FindPW();
+            findPw.Owner = this;
+            findPw.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Hide();
+            findPw.ShowDialog();
         }
 
         private void PwbPassword_KeyDown(object sender, KeyEventArgs e)
@@ -142,6 +159,11 @@ namespace StudentCard
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             TxtStudentId.Focus();
+        }
+
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Process.GetCurrentProcess().Kill();
         }
     }
 }

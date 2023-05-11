@@ -14,7 +14,7 @@
         <Button x:Name="Btn_Connect" Content="연결" HorizontalAlignment="Left" Margin="458,97,0,0" VerticalAlignment="Top" Click="Btn_Connect_Click"/>
 
 
-        <RichTextBox x:Name="Rtb_Log" Margin="46,153,224,81" VerticalScrollBarVisibility="Visible">
+        <RichTextBox x:Name="Rtb_Log" Margin="46,153,46,35" VerticalScrollBarVisibility="Visible">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>

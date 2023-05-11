@@ -1,24 +1,27 @@
 ﻿using MahApps.Metro.Controls;
-using StudentCard.Logics;
+using MahApps.Metro.Controls.Dialogs;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
+using StudentCard.Logics;
+using StudentCard;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace StudentCard
+namespace Manager
 {
     /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
+    /// ManagerWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Manager : MetroWindow
+    public partial class ManagerWindow : MetroWindow
     {
-        public Manager()
+        public ManagerWindow()
         {
             InitializeComponent();
 
@@ -28,6 +31,7 @@ namespace StudentCard
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+
             if (MqttReceive.MQTT_CLIENT != null && MqttReceive.MQTT_CLIENT.IsConnected)
             {   // DB 모니터링을 실행한 뒤 실시간 모니터링으로 넘어왔다면
                 MqttReceive.MQTT_CLIENT.MqttMsgPublishReceived += MQTT_CLIENT_MqttMsgPublishReceived;
@@ -101,15 +105,6 @@ namespace StudentCard
 
         private void MetroWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            /*            double width = e.NewSize.Width;
-                        Debug.WriteLine(width);
-                        // 그리드의 ColumnDefinitions 수를 조절하는 코드
-                        int newColumnCount = (int)Math.Floor(e.NewSize.Width / 200);
-                        if (newColumnCount < 1)
-                        {
-                            newColumnCount = 1;
-                        }
-                        Lbl.Content = newColumnCount;*/
         }
 
         private void Btn_Fire_Click(object sender, RoutedEventArgs e)
@@ -131,13 +126,26 @@ namespace StudentCard
 
         private void Btn_SaveData_Click(object sender, RoutedEventArgs e)
         {
-            var msg = "";
-            SaveData();        // 실제 DB에 저장처리
+            SaveData();
         }
+
+
+        // 3시간 간격으로 데이터 저장을 실행할 함수
+        // 이건 나중에 사용
+        //private async void ExocuteByThreeHour()
+        //{
+        //    int hour = Convert.ToByte(DateTime.Now.ToString("HH"));
+        //    int min = Convert.ToByte(DateTime.Now.ToString("mm"));
+        //    int sec = Convert.ToByte(DateTime.Now.ToString("ss"));
+        //    if (hour % 3 == 0 && min % 60 == 0 && sec % 60 == 0)
+        //    {
+        //        SaveData();
+        //        Thread.Sleep(1000); // 1초 동안 대기
+        //    }
+        //}
 
         private async void SaveData()
         {
-
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(MqttReceive.MYSQL_CONNSTRING))
@@ -169,13 +177,34 @@ namespace StudentCard
             {
                 await Commons.ShowMessageAsync("오류", ex.Message);
             }
-
-
-
         }
 
+        private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;        // e. Cancel을 true 하고 시작, 이거 없으면 이벤트가 발생하지 않는다.
+            var mySettings = new MetroDialogSettings
+            {
+                AffirmativeButtonText = "끝내기",
+                NegativeButtonText = "취소",
+                AnimateShow = true,
+                AnimateHide = true,
+            };
 
 
-
+            var result = await this.ShowMessageAsync("프로그램 끝내기", "프로그램을 끝내시겠습니까?",
+                                                     MessageDialogStyle.AffirmativeAndNegative, mySettings);
+            if (result == MessageDialogResult.Negative)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                if (MqttReceive.MQTT_CLIENT != null && MqttReceive.MQTT_CLIENT.IsConnected)
+                {
+                    MqttReceive.MQTT_CLIENT.Disconnect();
+                }
+                Process.GetCurrentProcess().Kill();     // 가장 확실
+            }
+        }
     }
 }

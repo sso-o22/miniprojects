@@ -218,10 +218,13 @@
     <Compile Include="FakeData.xaml.cs">
       <DependentUpon>FakeData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="List_Edit.xaml.cs">
+      <DependentUpon>List_Edit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Logics\Commons.cs" />
     <Compile Include="Logics\MqttReceive.cs" />
-    <Compile Include="Manager\Manager.xaml.cs">
-      <DependentUpon>Manager.xaml</DependentUpon>
+    <Compile Include="Manager\ManagerWindow.xaml.cs">
+      <DependentUpon>ManagerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\SensorInfo.cs" />
     <Compile Include="Models\StudentList.cs" />
@@ -239,6 +242,10 @@
       <DependentUpon>WhyPark_Manager.xaml</DependentUpon>
     </Compile>
     <Page Include="FakeData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="List_Edit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -268,7 +275,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Manager\Manager.xaml">
+    <Page Include="Manager\ManagerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

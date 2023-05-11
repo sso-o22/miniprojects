@@ -54,7 +54,7 @@ namespace StudentCard
 
         }
 
-        private async void Check_IdPw(string Id, string Pw)
+        private void Check_IdPw(string Id, string Pw)
         {
             using (MySqlConnection conn = new MySqlConnection(Commons.myConnString))
             {
@@ -85,7 +85,7 @@ namespace StudentCard
                     {
                         if (Convert.ToString(reader["major"]) == "관리자")
                         {
-                            var manager = new Manager();
+                            var manager = new WhyPark_Manager();
                             manager.Owner = this;
                             manager.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                             this.Hide();
@@ -112,7 +112,7 @@ namespace StudentCard
                             studentManagement.ShowDialog();
                             return;
                         }
-                        await Commons.ShowMessageAsync("로그인", "로그인 성공");
+                        Commons.ShowMessageAsync("로그인", "로그인 성공");
 
 
                     }

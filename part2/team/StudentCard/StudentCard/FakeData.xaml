@@ -1,0 +1,29 @@
+﻿<mah:MetroWindow x:Class="StudentCard.FakeData"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:StudentCard"
+        mc:Ignorable="d"
+        Title="FakeData" Height="450" Width="800">
+    <Grid>
+        <Label Content="주소입력" HorizontalAlignment="Left" Margin="108,98,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Tbx_MqttBrokerIp" HorizontalAlignment="Left" Margin="188,98,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="246"/>
+        <Button x:Name="Btn_Connect" Content="연결" HorizontalAlignment="Left" Margin="458,97,0,0" VerticalAlignment="Top" Click="Btn_Connect_Click"/>
+
+
+        <RichTextBox x:Name="Rtb_Log" Margin="46,153,224,81" VerticalScrollBarVisibility="Visible">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+
+
+
+    </Grid>
+
+</mah:MetroWindow>

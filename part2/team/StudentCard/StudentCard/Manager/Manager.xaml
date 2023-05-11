@@ -1,11 +1,11 @@
-﻿<mah:MetroWindow x:Class="Manager.MainWindow"
+﻿<mah:MetroWindow x:Class="StudentCard.Manager"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:local="clr-namespace:Manager"
+        xmlns:local="clr-namespace:StudentCard"
         mc:Ignorable="d"
         Title="MangerSystem" Height="450" Width="800"
                  SizeChanged="MetroWindow_SizeChanged" Loaded="MetroWindow_Loaded">
@@ -17,6 +17,7 @@
         <Menu>
             <MenuItem Header="_파일">
                 <MenuItem Header="종료" />
+                <MenuItem Header="로그아웃" />
             </MenuItem>
 
             <MenuItem Header="_보기">

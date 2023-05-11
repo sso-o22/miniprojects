@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bogus, Version=34.0.2.0, Culture=neutral, PublicKeyToken=fa1bb3f3f218129a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bogus.34.0.2\lib\net40\Bogus.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -212,10 +215,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FakeData.xaml.cs">
+      <DependentUpon>FakeData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Logics\Commons.cs" />
+    <Compile Include="Logics\MqttReceive.cs" />
     <Compile Include="Manager\Manager.xaml.cs">
       <DependentUpon>Manager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\SensorInfo.cs" />
     <Compile Include="Models\StudentList.cs" />
     <Compile Include="Models\WhyParkStudent.cs" />
     <Compile Include="Manager\Student_List.xaml.cs">
@@ -230,6 +238,10 @@
     <Compile Include="Manager\WhyPark_Manager.xaml.cs">
       <DependentUpon>WhyPark_Manager.xaml</DependentUpon>
     </Compile>
+    <Page Include="FakeData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Student\FindID.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

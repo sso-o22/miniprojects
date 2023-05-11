@@ -33,6 +33,10 @@ namespace SmartHomeMonitoringApp.Views
 
         Thread MqttThread { get; set; }  // 이게 없으면 UI 컨트롤이 어려워짐 
 
+        // MQTT Subscribtion text 과도 문제 -> 속도 저하를 잡기 위해 변수 추가
+        // 23.05.11 09:29
+        int MaxCount { get; set; } = 10;
+
         public DataBaseControl()
         {
             InitializeComponent();
@@ -121,12 +125,21 @@ namespace SmartHomeMonitoringApp.Views
 
         // 로그를 찍는데 비동기로
         private void UpdateLog(string msg)
-        {
+        {        
             // 예외처리 필요!!
             this.Invoke(() =>
             {
+                if (MaxCount <= 0)
+                {
+                    TxtLog.Text = string.Empty;
+                    TxtLog.Text += ">>> 문서 건수가 많아져서 초기화!\n";
+                    TxtLog.ScrollToEnd();
+                    MaxCount = 10;  // 테스트할 때는 10, 운영시에는 50
+                }
+
                 TxtLog.Text += $"{msg}\n";
                 TxtLog.ScrollToEnd();
+                MaxCount--;
             });
         }
 

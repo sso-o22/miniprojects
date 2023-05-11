@@ -42,7 +42,12 @@
                 <ComboBoxItem Content="학번"/>
                 <ComboBoxItem Content="이름"/>
             </ComboBox>
-            <TextBox x:Name="TbxSearch" Grid.Column="1" Margin="5" />
+            <TextBox x:Name="TbxSearch" Grid.Column="1" Margin="5"
+                     mah:TextBoxHelper.Watermark="검색할 학번이나 이름을 입력하세요"
+                     mah:TextBoxHelper.UseFloatingWatermark="True"
+                     mah:TextBoxHelper.ClearTextButton="True" 
+                     InputMethod.PreferredImeState="On"
+                     InputMethod.PreferredImeConversionMode="Native"/>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button x:Name="BtnSearch" Content="검색" Width="80" Height="40" Margin="5" FontSize="14"

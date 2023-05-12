@@ -111,5 +111,12 @@ namespace SmartHomeMonitoringApp
             ActiveItem.Content = new Views.VisualizationControl();
             StsSelScreen.Content = "Visualization View";
         }
+
+        private void MnuAbout_Click(object sender, RoutedEventArgs e)
+        {
+            var about = new About();
+            about.Owner = this;  // 메인창의 가운데에 뜨도록
+            about.ShowDialog();
+        }
     }
 }
